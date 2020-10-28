@@ -57,7 +57,6 @@ const updateClickedTile = (targetTile) => {
   const floodTiles = floodGet(targetTile, nextEntity)
     if (floodTiles.length < 2) {
       targetTile.entity = nextEntity
-      updateGameScore(nextEntity.value)
     }
     else {
       floodTiles.forEach((floodTile) => {
@@ -67,6 +66,7 @@ const updateClickedTile = (targetTile) => {
       if (floodTiles.length > 2) {
         targetTile.bonus = true
       }
+      updateGameScore(nextEntity.next.value)
       nextEntity = nextEntity.next
       updateClickedTile(targetTile)
     }
