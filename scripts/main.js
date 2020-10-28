@@ -14,14 +14,19 @@ const createGrid = () => {
   return tileGrid
 }
 
-const updateGameInfo = (info) => {
-  d3.select("#info").text(info)
+let gameScore = 0
+
+const updateGameInfo = (info) => d3.select("#info").text(info)
+const updateGameScore = (points) => {
+  gameScore += points
+  d3.select("#score").text(`Score: ${gameScore}`)
 }
 
 const tileGrid = createGrid()
 
 let nextEntity = GRASS
 updateGameInfo(`Placing: ${nextEntity.name}`)
+updateGameScore(0)
 
 const getChildren = (tile) => {
   const [x, y] = [tile.x, tile.y]
@@ -52,6 +57,7 @@ const updateClickedTile = (targetTile) => {
   const floodTiles = floodGet(targetTile, nextEntity)
     if (floodTiles.length < 2) {
       targetTile.entity = nextEntity
+      updateGameScore(nextEntity.value)
     }
     else {
       floodTiles.forEach((floodTile) => {
