@@ -1,9 +1,9 @@
 class Entity {
   constructor(name, color, value, next) {
-    this.name = name;
-    this.color = color;
-    this.value = value;
-    this.next = next;
+    this.name = name
+    this.color = color
+    this.value = value
+    this.next = next
   }
 }
 

@@ -1,9 +1,10 @@
 import { computeStarPoints, shadeColor } from "./graphics-utilities.js"
 import { ALL_ENTITIES } from "./entities.js"
 
-const CELL_SIZE = 30
+const CELL_WIDTH = 30
+const CELL_HEIGHT = 30
 const [WIDTH, HEIGHT] = [200, 200]
-const [X_PADDING, Y_PADDING] = [25, 25]
+const [X_PADDING, Y_PADDING] = [10, 10]
 
 const getTileTooltipText = (tile) => `${tile.entity.name}${tile.bonus ? "*" : ""}`
 
@@ -45,19 +46,22 @@ const initializeGraphics = (grid, onTileClick) => {
 
   initializeTileGradients(canvas)
 
-  const circles = canvas
-    .selectAll("circle")
+  const tileMarkers = canvas
+    .selectAll("rect")
     .data([].concat(...grid.tiles))
     .enter()
-    .append("circle")
-    .classed("tile-circle", true)
-    .attr("cx", (tile) => tile.x * CELL_SIZE + X_PADDING)
-    .attr("cy", (tile) => tile.y * CELL_SIZE + Y_PADDING)
-    .attr("r", CELL_SIZE / 2)
+    .append("rect")
+    .classed("tile-marker", true)
+    .attr("x", (tile) => tile.x * CELL_WIDTH + X_PADDING)
+    .attr("y", (tile) => tile.y * CELL_HEIGHT + Y_PADDING)
+    .attr("width", CELL_WIDTH)
+    .attr("height", CELL_HEIGHT)
+    .attr("stroke-width", 2.3)
+    .attr("stroke", "rgb(40, 40, 40)")
     .attr("fill", (tile) => `url(#gradient_${tile.entity.name})`)
-    .attr("id", (tile) => `circle_${tile.id}`)
+    .attr("id", (tile) => `tile_marker_${tile.id}`)
     .on("click", (mouseEvent, tile) => onTileClick(tile))
-  circles.append("title").text((tile) => getTileTooltipText(tile))
+  tileMarkers.append("title").text((tile) => getTileTooltipText(tile))
 
   canvas
     .selectAll("polygon")
@@ -66,8 +70,8 @@ const initializeGraphics = (grid, onTileClick) => {
     .append("polygon")
     .classed("tile-bonus", true)
     .attr("points", (tile) => {
-      const x = tile.x * CELL_SIZE + X_PADDING + 7
-      const y = tile.y * CELL_SIZE + Y_PADDING - 7
+      const x = tile.x * CELL_WIDTH + X_PADDING + 23
+      const y = tile.y * CELL_HEIGHT + Y_PADDING + 7
       const points = computeStarPoints(5, 3, 0.8, x, y)
       return [].concat(...points).join(" ")
     })
@@ -78,12 +82,12 @@ const initializeGraphics = (grid, onTileClick) => {
 const rerenderGraphics = (game) => {
   game.grid.tiles.forEach((row) => {
     row.forEach((tile) => {
-      // Update circle colors
-      d3.select(`#circle_${tile.id}`).attr("fill", `url(#gradient_${tile.entity.name})`)
-      d3.select(`#circle_${tile.id} > title`).text(getTileTooltipText(tile))
+      // Update tile marker colors
+      d3.select(`#tile_marker_${tile.id}`).attr("fill", `url(#gradient_${tile.entity.name})`)
+      d3.select(`#tile_marker_${tile.id} > title`).text(getTileTooltipText(tile))
 
       // Update bonus indicators
-      d3.select(`#bonus_${tile.id}`).attr("fill", tile.bonus ? "white" : "transparent")
+      d3.select(`#bonus_${tile.id}`).attr("fill", tile.bonus ? "rgb(230, 230, 230)" : "transparent")
     })
   })
 
