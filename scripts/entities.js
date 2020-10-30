@@ -27,9 +27,17 @@ const BEAR = new Entity('bear', '#D2B74B', 0, TOMBSTONE)
 const GEM = new Entity('gem', '#4DC1D3', 0, null)
 const ROBOT = new Entity('robot', '#D30601', 0, null)
 
+const ENTITY_PROBABILITIES = [
+  [GRASS, 0.84],
+  [BUSH, 0.10],
+  [TOMBSTONE, 0.05],
+  [TREE, 0.01],
+]
+
 export {
   EMPTY, STORAGE,
   GRASS, BUSH, TREE, COTTAGE, HOUSE, MANSION, FORTRESS,
   BEAR, TOMBSTONE, CHURCH, CATHEDRAL, TREASURE,
-  GEM, ROBOT
+  GEM, ROBOT,
+  ENTITY_PROBABILITIES
 }
