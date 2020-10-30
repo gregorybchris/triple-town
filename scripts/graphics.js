@@ -31,7 +31,7 @@ const initializeTileGradients = (canvas) => {
       .attr("stop-opacity", 1)
 
     const colorB = shadeColor(entity.color, 0)
-      gradient.append("stop")
+    gradient.append("stop")
       .attr('class', 'end')
       .attr("offset", "100%")
       .attr("stop-color", colorB)

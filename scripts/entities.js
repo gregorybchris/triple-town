@@ -19,18 +19,19 @@ const BEAR = new Entity('bear', '#D2B74B', 0, TOMBSTONE)
 
 const GEM = new Entity('gem', '#4DC1D3', 0, null)
 const ROBOT = new Entity('robot', '#D30601', 0, null)
+const ROCK = new Entity('rock', '#222222', 0, null)
 
 const ALL_ENTITIES = [
   EMPTY, STORAGE,
   GRASS, BUSH, TREE, COTTAGE, HOUSE, MANSION, FORTRESS,
   BEAR, TOMBSTONE, CHURCH, CATHEDRAL, TREASURE,
-  GEM, ROBOT
+  GEM, ROBOT, ROCK,
 ]
 
 export {
   EMPTY, STORAGE,
   GRASS, BUSH, TREE, COTTAGE, HOUSE, MANSION, FORTRESS,
   BEAR, TOMBSTONE, CHURCH, CATHEDRAL, TREASURE,
-  GEM, ROBOT,
-  ALL_ENTITIES
+  GEM, ROBOT, ROCK,
+  ALL_ENTITIES,
 }
