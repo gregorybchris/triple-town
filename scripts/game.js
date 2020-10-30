@@ -7,11 +7,11 @@ import {
 
 class Game {
   static ENTITY_PROBABILITIES = [
-    [GRASS,     0.78],
+    [GRASS,     0.73],
     [BUSH,      0.10],
     [TREE,      0.04],
-    [TOMBSTONE, 0.05],
-    [GEM,       0.02],
+    [TOMBSTONE, 0.08],
+    [GEM,       0.04],
     [ROBOT,     0.01],
   ]
 
@@ -96,11 +96,7 @@ class Game {
               return true
             }
             else {
-              this._activeEntity = bestFlood[0].entity.next
-              bestFlood.forEach((floodTile) => {
-                floodTile.entity = EMPTY
-                floodTile.bonus = false
-              })
+              this._activeEntity = bestFlood[0].entity
             }
           }
         }
