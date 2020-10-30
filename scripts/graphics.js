@@ -94,6 +94,7 @@ const rerenderGraphics = (game) => {
   // Update page text
   d3.select("#score").text(`Score: ${game.score}`)
   d3.select("#active").text(`Placing: ${game.activeEntity.name}`)
+  d3.select("#turns").text(`Turns: ${game.turns}`)
 }
 
 export { initializeGraphics, rerenderGraphics }

@@ -15,6 +15,7 @@ class Game {
   constructor(grid) {
     this._grid = grid
     this._score = 0
+    this._turns = 0
     this._activeEntity = GRASS
   }
 
@@ -26,6 +27,10 @@ class Game {
     return this._score
   }
 
+  get turns() {
+    return this._turns
+  }
+
   get activeEntity() {
     return this._activeEntity
   }
@@ -33,6 +38,7 @@ class Game {
   onTileClick(tile) {
     if (tile.entity.name == EMPTY.name) {
       this.updateClickedTile(tile, this._grid)
+      this._turns++
       this._activeEntity = this.getRandomEntity()
     }
     else {
