@@ -19,7 +19,6 @@ class Grid {
       })
     })
     this._tiles[0][0] = new Tile(STORAGE, 0, 0)
-    console.log(this._tiles)
   }
 
   get width() {

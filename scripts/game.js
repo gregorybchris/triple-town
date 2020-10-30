@@ -7,29 +7,54 @@ import {
 class Game {
   constructor(grid) {
     this._grid = grid
-    this._gameScore = 0
+    this._score = 0
     this._placingEntity = GRASS
   }
 
-  updateGameScore(points) {
-    this._gameScore += points
-    d3.select("#score").text(`Score: ${this._gameScore}`)
+  get grid() {
+    return this._grid
   }
 
-  updateGameInfo(info) {
-    d3.select("#info").text(info)
+  get score() {
+    return this._score
   }
 
-  onTileClick(tile, rerender) {
+  get placingEntity() {
+    return this._placingEntity
+  }
+
+  onTileClick(tile) {
     if (tile.entity.name == EMPTY.name) {
-      this.updateClickedTile(tile, this._grid, this._placingEntity)
-  
+      this.updateClickedTile(tile, this._grid)
       this._placingEntity = this.getRandomEntity()
-      this.updateGameInfo(`Placing: ${this._placingEntity.name}`)
-      rerender(this._grid)
     }
     else {
       console.log("SCREAM")
+    }
+  }
+
+  updateClickedTile(targetTile, grid) {
+    const floodTiles = Game.floodGet(grid, targetTile, this._placingEntity)
+    if (floodTiles.length < 2) {
+      targetTile.entity = this._placingEntity
+    }
+    else {
+      floodTiles.forEach((floodTile) => {
+        floodTile.entity = EMPTY
+        floodTile.bonus = false
+      })
+      targetTile.bonus = false
+
+      if (floodTiles.length > 2) {
+        targetTile.bonus = true
+        this._score += this._placingEntity.next.value * 2
+      }
+      else {
+        this._score += this._placingEntity.next.value
+      }
+
+      this._placingEntity = this._placingEntity.next
+      this.updateClickedTile(targetTile, grid)
     }
   }
 
@@ -56,31 +81,6 @@ class Game {
       }
     })
     return results
-  }
-
-  updateClickedTile(targetTile, grid, placingEntity) {
-    const floodTiles = Game.floodGet(grid, targetTile, placingEntity)
-    if (floodTiles.length < 2) {
-      targetTile.entity = placingEntity
-    }
-    else {
-      floodTiles.forEach((floodTile) => {
-        floodTile.entity = EMPTY
-        floodTile.bonus = false
-      })
-      targetTile.bonus = false
-  
-      if (floodTiles.length > 2) {
-        targetTile.bonus = true
-        this.updateGameScore(placingEntity.next.value * 2)
-      }
-      else {
-        this.updateGameScore(placingEntity.next.value)
-      }
-  
-      placingEntity = placingEntity.next
-      this.updateClickedTile(targetTile, grid, placingEntity)
-    }
   }
 
   getRandomEntity() {

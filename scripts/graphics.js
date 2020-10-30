@@ -6,7 +6,7 @@ const [X_PADDING, Y_PADDING] = [25, 25]
 
 const getTileTooltipText = (tile) => `${tile.entity.name}${tile.bonus ? "+" : ""}`
 
-const initializeGraphics = (grid, game) => {
+const initializeGraphics = (grid, onTileClick) => {
   const canvas = d3.select("svg")
     .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox", `0 0 ${WIDTH} ${HEIGHT}`)
@@ -22,7 +22,7 @@ const initializeGraphics = (grid, game) => {
     .attr("r", CELL_SIZE / 2)
     .attr("fill", (tile) => tile.entity.color)
     .attr("id", (tile) => `circle_${tile.id}`)
-    .on("click", (mouseEvent, tile) => game.onTileClick(tile, rerenderGraphics))
+    .on("click", (mouseEvent, tile) => onTileClick(tile))
   circles.append("title").text((tile) => getTileTooltipText(tile))
 
   canvas
@@ -41,14 +41,16 @@ const initializeGraphics = (grid, game) => {
     .attr("id", (tile) => `bonus_${tile.id}`)
 }
 
-const rerenderGraphics = (grid) => {
-  grid.tiles.forEach((row) => {
+const rerenderGraphics = (game) => {
+  game.grid.tiles.forEach((row) => {
     row.forEach((tile) => {
       d3.select(`#circle_${tile.id}`).attr("fill", tile.entity.color)
       d3.select(`#circle_${tile.id} > title`).text(getTileTooltipText(tile))
       d3.select(`#bonus_${tile.id}`).attr("fill", tile.bonus ? "white" : "transparent")
     })
   })
+  d3.select("#score").text(`Score: ${game.score}`)
+  d3.select("#info").text(`Placing: ${game.placingEntity.name}`)
 }
 
-export { initializeGraphics }
+export { initializeGraphics, rerenderGraphics }
