@@ -1,11 +1,4 @@
-class Entity {
-  constructor(name, color, value, next) {
-    this.name = name;
-    this.color = color;
-    this.value = value;
-    this.next = next;
-  }
-}
+import Entity from './entity.js'
 
 const EMPTY = new Entity('empty', '#404040', 0, null)
 const STORAGE = new Entity('storage', '#000000', 0, null)
@@ -27,17 +20,9 @@ const BEAR = new Entity('bear', '#D2B74B', 0, TOMBSTONE)
 const GEM = new Entity('gem', '#4DC1D3', 0, null)
 const ROBOT = new Entity('robot', '#D30601', 0, null)
 
-const ENTITY_PROBABILITIES = [
-  [GRASS, 0.84],
-  [BUSH, 0.10],
-  [TOMBSTONE, 0.05],
-  [TREE, 0.01],
-]
-
 export {
   EMPTY, STORAGE,
   GRASS, BUSH, TREE, COTTAGE, HOUSE, MANSION, FORTRESS,
   BEAR, TOMBSTONE, CHURCH, CATHEDRAL, TREASURE,
-  GEM, ROBOT,
-  ENTITY_PROBABILITIES
+  GEM, ROBOT
 }

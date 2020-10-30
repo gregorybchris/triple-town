@@ -4,7 +4,7 @@ const CELL_SIZE = 30
 const [WIDTH, HEIGHT] = [200, 200]
 const [X_PADDING, Y_PADDING] = [25, 25]
 
-const getTileTooltipText = (tile) => `${tile.entity.name}${tile.bonus ? "+" : ""}`
+const getTileTooltipText = (tile) => `${tile.entity.name}${tile.bonus ? "*" : ""}`
 
 const initializeGraphics = (grid, onTileClick) => {
   const canvas = d3.select("svg")
@@ -50,7 +50,7 @@ const rerenderGraphics = (game) => {
     })
   })
   d3.select("#score").text(`Score: ${game.score}`)
-  d3.select("#info").text(`Placing: ${game.placingEntity.name}`)
+  d3.select("#active").text(`Placing: ${game.activeEntity.name}`)
 }
 
 export { initializeGraphics, rerenderGraphics }

@@ -1,5 +1,5 @@
-import { Game } from "./game.js"
-import { Grid } from "./grid.js"
+import Game from "./game.js"
+import Grid from "./grid.js"
 import { initializeGraphics, rerenderGraphics } from "./graphics.js"
 
 const grid = new Grid()
