@@ -12,4 +12,32 @@ const computeStarPoints = (n, r1, r2, x = 0, y = 0, a = 0) => {
   return interleave(outerPoints, innerPoints)
 }
 
-export { computeStarPoints }
+function shadeColor(color, percent) {
+  let r = parseInt(color.substring(1, 3), 16)
+  let g = parseInt(color.substring(3, 5), 16)
+  let b = parseInt(color.substring(5, 7), 16)
+
+  // Scale
+  r = parseInt(r * (percent + 100) / 100)
+  g = parseInt(g * (percent + 100) / 100)
+  b = parseInt(b * (percent + 100) / 100)
+
+  // Clip
+  r = (r < 255) ? r : 255
+  g = (g < 255) ? g : 255
+  b = (b < 255) ? b : 255
+
+  // Convert to strings
+  let rStr = r.toString(16)
+  let gStr = g.toString(16)
+  let bStr = b.toString(16)
+
+  // Format strings
+  rStr = rStr.length == 1 ? `0${rStr}` : rStr
+  gStr = gStr.length == 1 ? `0${gStr}` : gStr
+  bStr = bStr.length == 1 ? `0${bStr}` : bStr
+
+  return `#${rStr}${gStr}${bStr}`
+}
+
+export { computeStarPoints, shadeColor }
