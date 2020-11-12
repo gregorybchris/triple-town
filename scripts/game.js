@@ -1,20 +1,10 @@
 import {
-  EMPTY,
-  GRASS, BUSH, TREE,
-  TOMBSTONE,
-  GEM, ROBOT, ROCK,
+  EMPTY, GRASS, GEM, ROBOT, ROCK,
 } from "./entities.js"
 
-class Game {
-  static ENTITY_PROBABILITIES = [
-    [GRASS,     0.73],
-    [BUSH,      0.10],
-    [TREE,      0.04],
-    [TOMBSTONE, 0.08],
-    [GEM,       0.04],
-    [ROBOT,     0.01],
-  ]
+import ENTITY_PROBABILITIES from './entity-probabilities.js'
 
+class Game {
   constructor(grid) {
     this._grid = grid
     this._score = 0
@@ -156,8 +146,8 @@ class Game {
   sampleEntity() {
     const sampleValue = Math.random()
     let aggregateProbability = 0
-    for (let i = 0; i < Game.ENTITY_PROBABILITIES.length; i++) {
-      let [entity, entityProbability] = Game.ENTITY_PROBABILITIES[i]
+    for (let i = 0; i < ENTITY_PROBABILITIES.length; i++) {
+      let [entity, entityProbability] = ENTITY_PROBABILITIES[i]
       aggregateProbability += entityProbability
       if (sampleValue < aggregateProbability) {
         return entity
